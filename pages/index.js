@@ -3,13 +3,9 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import Link from "next/link";
 import EventList from '../components/events/EventList';
+import { data } from '../data/dummy';
 
 
-const data = [
-  {id:1, name: 'First event'},
-  {id:2, name: 'Second event'},
-  {id:3, name: 'Third event'},
-];
 
 export default function Home() {
   return (

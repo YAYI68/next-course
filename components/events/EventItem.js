@@ -5,7 +5,7 @@ import React from 'react'
 function EventItem({item}) {
   return (
     <li>
-      <Link href={``} >{item.name}</Link> 
+      <Link href={`events/${item.id}`} >{item.name}</Link> 
     </li>
   )
 }
