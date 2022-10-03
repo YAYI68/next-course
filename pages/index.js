@@ -15,8 +15,9 @@ export default function Home(props) {
      <h1>Home page</h1>
      {/* <EventList items={data}/> */}
      <ul>
-      {products.map((product)=>(
-       <li>{product.name}</li>
+      {products.map((product,index)=>(
+       <li key={index}>
+        <Link href={`/products/${product.id}`}>{product.name}</Link> </li>
       ))}
        {/* <li>Product 2</li>
        <li>product 3</li> */}
@@ -26,15 +27,31 @@ export default function Home(props) {
 }
 
 
-export async function getStaticProps(){
+export async function getStaticProps(context){
     const filePath = path.join(process.cwd(),'data','dummy-data.json');
-   const jsonData =  await fs.readFile(filePath)
-   const data = JSON.parse(jsonData);
+    const jsonData =  await fs.readFile(filePath)
+    const data = JSON.parse(jsonData);
+    
+    if(!data){
+      return {
+        redirect:{
+          destination:'/product'
+        }
+      }
+    }
+
+    if(data.products.length === 0){
+      return{
+        notFound: true,
+      }
+    }
 
    return{
     props:{
       products: data.products,
-    }
+    },
+    revalidate:10,
+    // NotFound:true,
    }
 
 }
