@@ -17,7 +17,6 @@ async function handler (req, res){
   
     
    const client = await connectToDatabase()
-    await client.connect()
    const hash_password = await hashPassword(password)
    console.log({hashPassword: hash_password})
    const db = client.db('auth-demo');
@@ -25,7 +24,7 @@ async function handler (req, res){
     email:email,
     password:hash_password,
 });
-
+client.close();
 res.status(201).json({ message:" Created User Successfully"})
 
 }
