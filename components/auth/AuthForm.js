@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react'
 
 function AuthForm() {
-    const [ isLogin, setIsLogin ] = useState(true)
+    const [ isLogin, setIsLogin ] = useState(false)
     const emailRef = useRef()
     const passwordRef = useRef()
 
@@ -30,7 +30,8 @@ function AuthForm() {
          else{
             try{
               const result = await createUser(email,password);   
-            console.log(result);
+              
+              console.log(result);
             }catch(error){
 
             }
@@ -43,8 +44,8 @@ function AuthForm() {
       <h1>{isLogin? "Login":"Logout"}</h1>
 
       <form onSubmit={handleSubmit}>
-          <input type="email" name="" value="" ref={emailRef} />
-          <input type="password" name="" value="" ref={passwordRef} />
+          <input type="email" name="email"  ref={emailRef} />
+          <input type="password" name="password"  ref={passwordRef} />
           <button type="submit">Submit</button>
       </form>
     </div>
