@@ -13,12 +13,17 @@ async function handler (req, res){
     !password || password.trim().length <  7){
         res.status(422).json({ message:"Invalid email or password"})
     }
+
+  
+    
    const client = await connectToDatabase()
+    await client.connect()
+   const hash_password = await hashPassword(password)
+   console.log({hashPassword: hash_password})
    const db = client.db('auth-demo');
-   const hashPassword = await hashPassword(password)
-   db.collection('users').insertOne({
+   const result =  await db.collection('users').insertOne({
     email:email,
-    password:hashPassword,
+    password:hash_password,
 });
 
 res.status(201).json({ message:" Created User Successfully"})
