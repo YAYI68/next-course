@@ -19,7 +19,7 @@ async function handler (req, res){
    const client = await connectToDatabase()
    const hash_password = await hashPassword(password)
    console.log({hashPassword: hash_password})
-   const db = client.db('auth-demo');
+   const db = client.db('auth');
    const result =  await db.collection('users').insertOne({
     email:email,
     password:hash_password,
