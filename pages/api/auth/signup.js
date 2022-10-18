@@ -26,7 +26,7 @@ async function handler (req, res){
     password:hash_password,
 });
 
-// client.close();
+client.close();
 res.status(201).json({ message:" Created User Successfully"})
 }
 

@@ -17,23 +17,22 @@ export default NextAuth({
             //     email: { type: "email", },
             //     password: { type: "password" }
             //   },
-           async authorize(credentials,req){
-            console.log({credentials})
-            console.log({req})
+           async authorize(credentials){
+            console.log(credentials.email)
+            // console.log({req})
              const client = await connectToDatabase()
              const userCollection = client.db('MyDatabase').collection("users");
              const user = await userCollection.findOne({email:credentials.email });
-             console.log({user});
              if(!user){
                 client.close();
                 throw new Error("User not found");
              }
-              const isValid = verifyPassword(credentials.password,user.password)
+              const isValid = await verifyPassword(credentials.password,user.password)
              if(!isValid){
                 client.close();
                 throw new Error("User can not log in")
              }
-            //  client.close();
+             client.close();
              return {email:user.email}
             }
         })
