@@ -1,7 +1,8 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef} from 'react';
+import { signIn } from "next-auth/react"
 
 function AuthForm() {
-    const [ isLogin, setIsLogin ] = useState(false)
+    const [ isLogin, setIsLogin ] = useState(true)
     const emailRef = useRef()
     const passwordRef = useRef()
 
@@ -26,6 +27,15 @@ function AuthForm() {
          const password = passwordRef.current.value;
          if(isLogin){
             console.log("user is Log In")
+            const result = await signIn('credentials',{
+              redirect:false,
+              email:email,
+              password:password,
+            })
+            if(!result.error){
+              // set the login state to true
+            }
+            console.log(result);
          }
          else{
             try{

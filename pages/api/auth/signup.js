@@ -16,9 +16,8 @@ async function handler (req, res){
    const client = await connectToDatabase()
    const hash_password = await hashPassword(password)
    const db = client.db('MyDatabase');
-   const existingUser = db.collection("users").findOne({email: email})
+   const existingUser = await db.collection("users").findOne({email: email})
    if(existingUser){
-    client.close()
     res.status(422).json({ message: "User already exists"}) 
     return;
    }
@@ -27,7 +26,7 @@ async function handler (req, res){
     password:hash_password,
 });
 
-client.close();
+// client.close();
 res.status(201).json({ message:" Created User Successfully"})
 }
 

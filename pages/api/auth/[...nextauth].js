@@ -11,13 +11,21 @@ export default NextAuth({
     },
     providers:[
         CredentialsProvider({
+            name: "Credentials",
             // credentials:{email:credentials.email, password:credentials.password}
-           async authorize(credentials){
+            // credentials: {
+            //     email: { type: "email", },
+            //     password: { type: "password" }
+            //   },
+           async authorize(credentials,req){
+            console.log({credentials})
+            console.log({req})
              const client = await connectToDatabase()
-             const userCollection = client.db().collection("users");
-             const user = userCollection.findOne({ email:credentials.email });
+             const userCollection = client.db('MyDatabase').collection("users");
+             const user = await userCollection.findOne({email:credentials.email });
+             console.log({user});
              if(!user){
-                client();
+                client.close();
                 throw new Error("User not found");
              }
               const isValid = verifyPassword(credentials.password,user.password)
@@ -25,7 +33,7 @@ export default NextAuth({
                 client.close();
                 throw new Error("User can not log in")
              }
-             client.close();
+            //  client.close();
              return {email:user.email}
             }
         })
