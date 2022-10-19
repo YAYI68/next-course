@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import { signIn } from "next-auth/react"
+import { signIn,  useSession } from "next-auth/react"
 
 function AuthForm() {
     const [ isLogin, setIsLogin ] = useState(true)
