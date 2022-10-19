@@ -1,32 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { getSession, useSession } from "next-auth/react"
 
-function Profile() {
-    const {data, status } = useSession();
-    const [ isLoading, setIsLoading ] = useState(true);
-    console.log({data})
-   useEffect(()=>{
-       (async()=>{
-        const session = await getSession()
-        console.log({session});
-         if(!session){
-            window.location.href ="/index";
-         }else{
-            setIsLoading(false);
-         }
-       })()
+import React from 'react';
+import { getSession } from 'next-auth/react';
+import UserProfile from '../components/auth/UserProfile';
 
-   },[])
 
-     if(isLoading){
-        return <h1>Loading...</h1>
-     }
+
+function Profile({session}) {
+  
 
   return (
     <div>
-        <h1>My Profile page</h1>
+        <UserProfile />
     </div>
   )
+}
+
+export async function getServerSideProps(context){
+    const session = await getSession({req:context.req});
+    if(!session){
+      return{
+         redirect:{
+            destination:"/index",
+            permanent:false
+         }
+      }
+    }
+    return{
+      props:{session}
+   }
 }
 
 export default Profile
