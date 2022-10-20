@@ -2,7 +2,7 @@
 import React from 'react';
 import { getSession } from 'next-auth/react';
 import UserProfile from '../components/auth/UserProfile';
-
+import Navbar from '../components/Navbar'
 
 
 function Profile({session}) {
@@ -10,6 +10,7 @@ function Profile({session}) {
 
   return (
     <div>
+      <Navbar/>
         <UserProfile />
     </div>
   )

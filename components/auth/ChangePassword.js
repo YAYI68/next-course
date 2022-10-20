@@ -1,4 +1,5 @@
-import React, { useRef } from 'react'
+import React, { useRef } from 'react';
+import { getSession } from 'next-auth/react';
 
 const ChangePassword = () => {
     const oldPasswordRef = useRef();
@@ -30,6 +31,22 @@ const ChangePassword = () => {
     <button type="submit">Submit</button>
 </form></div>
   )
+}
+
+
+export async function getServerSideProps(context){
+        const { req, res} = context;
+         const session = await getSession({req:req}) 
+         if(!session){
+          return{
+            redirect:{
+              destination:"/index",
+              permanent:false
+           }
+          }
+         }       
+
+
 }
 
 export default ChangePassword

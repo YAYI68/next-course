@@ -36,7 +36,6 @@ function AuthForm() {
               password:password,
             })
             if(!result.error){
-              // set the login state to true
               router.replace("/profile")
             }
             console.log(result);

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AuthForm from '../components/auth/AuthForm'
-import Navbar from '../components/Navbar'
+import AuthForm from '../components/auth/AuthForm';
 import { getSession } from "next-auth/react";
 import { useRouter } from 'next/router';
 
@@ -11,7 +10,7 @@ function Signup() {
 
   useEffect(()=>{
     (async()=>{
-      const session = getSession();
+      const session = await getSession();
       if(session){
         router.replace('/profile')
       }
@@ -27,7 +26,6 @@ function Signup() {
 
   return (
     <div>
-       <Navbar/>
         <AuthForm />
     </div>
   )

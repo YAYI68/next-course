@@ -1,8 +1,10 @@
-import React from 'react'
+import React from 'react';
+
 
 function Userprofile({username}) {
   return (
     <div>
+         
         <h1>{username}</h1>
     </div>
   )
